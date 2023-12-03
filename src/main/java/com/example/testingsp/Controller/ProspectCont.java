@@ -46,6 +46,11 @@ private ProspectService prospectService ;
     return allProspect ;
         }
 
+        @GetMapping(path = "/norelance")
+        public List<Prospect> getProspectsWithDisponibiliteNotRelance() {
+            return prospectService.getProspectsWithDisponibiliteNotRelance();
+        }
+
        /* @GetMapping("/{idtiers}")
     public ResponseEntity<ProspectDTO> getProspectbyId(@PathVariable int idtiers){
             Prospect prospect =prospectService.getProspectbyId(idtiers);
@@ -92,7 +97,9 @@ private ProspectService prospectService ;
                 prospect.getLANGUE(),
                 prospect.getMAJCV(),
                 prospect.getMOTCLE(),
-                prospect.getNIVEAUACADEMIQUE()
+                prospect.getNIVEAUACADEMIQUE(),
+                prospect.getRl_majcv(),
+                prospect.getRl_desc()
 
         );
 
@@ -124,5 +131,11 @@ private ProspectService prospectService ;
     @GetMapping("/maj")
     public List<MajProsDTO> getMajData() {
         return prospectService.getMajData();
+    }
+
+    @PostMapping("/updateStatus")
+    public ResponseEntity<String> updateProspectStatusManually() {
+        prospectService.updateProspectStatus();
+        return ResponseEntity.ok("Prospect status update initiated.");
     }
 }

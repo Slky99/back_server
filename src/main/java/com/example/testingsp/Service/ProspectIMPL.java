@@ -7,9 +7,14 @@ import com.example.testingsp.Repository.ConsultantRepo;
 import com.example.testingsp.Repository.ProspectRepo;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +26,10 @@ public class ProspectIMPL implements  ProspectService{
     public ProspectRepo prospectRepo ;
     @Autowired
     private ConsultantRepo consultantRepo;
+
+
+
+
 
     @Override
     public String addProspect(ProspectSaveDTO prospectSaveDTO){
@@ -45,7 +54,9 @@ public class ProspectIMPL implements  ProspectService{
                 prospectSaveDTO.getLANGUE(),
                 prospectSaveDTO.getMAJCV(),
                 prospectSaveDTO.getMOTCLE(),
-                prospectSaveDTO.getNIVEAUACADEMIQUE()
+                prospectSaveDTO.getNIVEAUACADEMIQUE(),
+                prospectSaveDTO.getRl_majcv(),
+                prospectSaveDTO.getRl_desc()
          );
     prospectRepo.save(prospect);
     return prospect.getNOM();
@@ -81,7 +92,9 @@ public class ProspectIMPL implements  ProspectService{
                 i.getLANGUE(),
                 i.getMAJCV(),
                 i.getMOTCLE(),
-                i.getNIVEAUACADEMIQUE()
+                i.getNIVEAUACADEMIQUE(),
+                i.getRl_majcv(),
+                i.getRl_desc()
         );
         prospectDTOList.add(prospectDTO);
     }
@@ -114,6 +127,8 @@ public class ProspectIMPL implements  ProspectService{
             prospect.setPAYSRESIDENCE(prospectUpDTO.getPAYSRESIDENCE());
             prospect.setCOMPETENCEMETIER(prospectUpDTO.getCOMPETENCEMETIER());
             prospect.setCIN(prospectUpDTO.getCIN());
+            prospect.setRl_majcv(prospectUpDTO.getRl_majcv());
+            prospect.setRl_desc(prospectUpDTO.getRl_desc());
 
 
             prospectRepo.save(prospect);
@@ -186,19 +201,59 @@ public class ProspectIMPL implements  ProspectService{
         return prospectRepo.getMajData();
     }
 
-    /*public List<MajProsDTO>  getMajData() {
-        List<Object[]> result = prospectRepo.getMajData();
-        List<MajProsDTO>  Charts = new ArrayList<>();
 
-        for (Object row : result) {
-            Object[] rowData = (Object[]) row;
-            MajProsDTO majProsDTO = new MajProsDTO(
-                    (String) rowData[0],
-                    ((long) rowData[1])
-            );
-           Charts.add(majProsDTO);
+    @Override
+    @Scheduled(cron = "0 0 0 * * ?") //  Batch de minuit
+    public void scheduleUpdateProspectStatus() {
+        updateProspectStatus();
+    }
+    public void updateProspectStatus() {
+        List<Prospect> prospects = prospectRepo.findAll();
+
+        for (Prospect prospect : prospects) {
+            System.out.println("Checking prospect: " + prospect.getNOM());
+
+            if (isUpdateRequired(prospect.getRl_majcv())) {
+                System.out.println("Updating prospect: " + prospect.getRl_desc());
+                prospect.setDISPONIBILITE("A relancé");
+                prospect.setRl_desc("Veuillez contacter le prospect.");
+
+                prospectRepo.save(prospect);
+
+                System.out.println("Prospect updated: " + prospect.getRl_desc());
+            } else {
+                System.out.println("No update needed for prospect: " + prospect.getRl_desc());
+            }
+        }
+    }
+
+    private boolean isUpdateRequired(Date rl_majcv) {
+        if (rl_majcv == null) {
+            System.out.println("Prospect has a null rl_majcv. No update needed.");
+            return false;
         }
 
-        return  Charts;
-    }*/
+        LocalDate majcvLocalDate = rl_majcv.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate currentDate = LocalDate.now();
+
+        int monthsBetween = (int) ChronoUnit.MONTHS.between(majcvLocalDate, currentDate);
+        int remainingDays = currentDate.getDayOfMonth() - majcvLocalDate.getDayOfMonth();
+
+        System.out.println("Months between: " + monthsBetween);
+        System.out.println("Remaining days: " + remainingDays);
+
+        boolean updateRequired = monthsBetween > 6 || (monthsBetween == 6 && remainingDays >= 0);
+
+        System.out.println("Is update required? " + updateRequired);
+
+        return updateRequired;
+    }
+
+
+    @Override
+    public List<Prospect> getProspectsWithDisponibiliteNotRelance() {
+        return prospectRepo.findProspectsWithDisponibiliteNotRelance();
+
 }
+}
+

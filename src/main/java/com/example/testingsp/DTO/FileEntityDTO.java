@@ -1,25 +1,17 @@
 package com.example.testingsp.DTO;
 
+public class FileEntityDTO {
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class FileEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String fileName;
 
     private String prospectId;
 
-    public FileEntity() {
-    }
 
-    public FileEntity(String fileName, String prospectId) {
+
+    public FileEntityDTO(Long id, String fileName, String prospectId) {
+        this.id = id;
         this.fileName = fileName;
         this.prospectId = prospectId;
     }
@@ -50,7 +42,7 @@ public class FileEntity {
 
     @Override
     public String toString() {
-        return "FileEntity{" +
+        return "FileEntityDTO{" +
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
                 ", prospectId='" + prospectId + '\'' +

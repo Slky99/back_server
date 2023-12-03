@@ -1,7 +1,10 @@
 package com.example.testingsp.Controller;
 
+import com.example.testingsp.DTO.ClientDTO;
 import com.example.testingsp.DTO.FileEntity;
+import com.example.testingsp.DTO.FileEntityDTO;
 import com.example.testingsp.Repository.FileEntityRepo;
+import com.example.testingsp.Service.FileEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/files")
@@ -21,6 +25,8 @@ public class FileEntityCont {
 
     @Autowired
     private FileEntityRepo fileEntityRepo ;
+    @Autowired
+    private FileEntityService fileEntityService;
 
     @PostMapping(path = "/savefile/{prospectId}")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
@@ -40,11 +46,9 @@ public class FileEntityCont {
             String uniqueFileName = System.currentTimeMillis() + "_" + originalFileName;
             Path filePath = Paths.get(UPLOAD_DIR, uniqueFileName);
 
-            // Save the file to the server
-            file.transferTo(filePath.toFile());
+             file.transferTo(filePath.toFile());
 
-            // Save file information to the database
-            FileEntity fileEntity = new FileEntity(uniqueFileName, prospectId);
+             FileEntity fileEntity = new FileEntity(uniqueFileName, prospectId);
             fileEntityRepo.save(fileEntity);
 
             return ResponseEntity.ok("File uploaded successfully");
@@ -53,5 +57,17 @@ public class FileEntityCont {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Failed to upload the file");
         }
+    }
+
+    @GetMapping(path = "/files")
+    public List<FileEntity> getAllFileEntities() {
+        return fileEntityService.getAllFileEntities();
+    }
+
+
+    @GetMapping(path = "/show")
+    public List<FileEntityDTO> showFiles (){
+        List<FileEntityDTO> allfiles = fileEntityService.showFiles();
+        return allfiles;
     }
 }

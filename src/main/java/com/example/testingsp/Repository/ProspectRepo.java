@@ -2,6 +2,7 @@ package com.example.testingsp.Repository;
 
 import com.example.testingsp.DTO.MajProsDTO;
 import com.example.testingsp.DTO.ProsDto;
+import com.example.testingsp.DTO.ProspectDTO;
 import com.example.testingsp.Entite.Prospect;
 import com.example.testingsp.Entite.TestingSP;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +21,8 @@ public interface ProspectRepo extends JpaRepository<Prospect,Integer> {
             "GROUP BY p.MAJCV")
     List<MajProsDTO>  getMajData();
 
+    @Query("SELECT p FROM Prospect p" +
+            " WHERE p.DISPONIBILITE = 'A relancé'")
+    List<Prospect> findProspectsWithDisponibiliteNotRelance();
 }
+

@@ -31,7 +31,10 @@ public class ProspectSaveDTO {
     private String MOTCLE ;
     private String NIVEAUACADEMIQUE ;
 
-    public ProspectSaveDTO(String EMAIL, String NOM, String status, String PAYSRESIDENCE, String SECTEURACTIVITE, long TELEPHONE, String CIN,  Date dateNaissance, String PROFESSION, String SEXE, long ANNEEEXPERIENCE, String COMPETENCEMETIER, String COMPETENCETECHNIQUE, String DISPONIBILITE, String EXPERIENCEPROFESSIONNELLE, String FORMATION, String LANGUE, String MAJCV, String MOTCLE, String NIVEAUACADEMIQUE) {
+    private Date rl_majcv ;
+    private String rl_desc ;
+
+    public ProspectSaveDTO(String EMAIL, String NOM, String status, String PAYSRESIDENCE, String SECTEURACTIVITE, long TELEPHONE, String CIN, Date dateNaissance, String PROFESSION, String SEXE, long ANNEEEXPERIENCE, String COMPETENCEMETIER, String COMPETENCETECHNIQUE, String DISPONIBILITE, String EXPERIENCEPROFESSIONNELLE, String FORMATION, String LANGUE, String MAJCV, String MOTCLE, String NIVEAUACADEMIQUE, Date rl_majcv, String rl_desc) {
         this.EMAIL = EMAIL;
         this.NOM = NOM;
         this.status = status;
@@ -52,6 +55,8 @@ public class ProspectSaveDTO {
         this.MAJCV = MAJCV;
         this.MOTCLE = MOTCLE;
         this.NIVEAUACADEMIQUE = NIVEAUACADEMIQUE;
+        this.rl_majcv = rl_majcv;
+        this.rl_desc = rl_desc;
     }
 
     public ProspectSaveDTO() {
@@ -217,6 +222,22 @@ public class ProspectSaveDTO {
         this.NIVEAUACADEMIQUE = NIVEAUACADEMIQUE;
     }
 
+    public Date getRl_majcv() {
+        return rl_majcv;
+    }
+
+    public void setRl_majcv(Date rl_majcv) {
+        this.rl_majcv = rl_majcv;
+    }
+
+    public String getRl_desc() {
+        return rl_desc;
+    }
+
+    public void setRl_desc(String rl_desc) {
+        this.rl_desc = rl_desc;
+    }
+
     @Override
     public String toString() {
         return "ProspectSaveDTO{" +
@@ -237,9 +258,11 @@ public class ProspectSaveDTO {
                 ", EXPERIENCEPROFESSIONNELLE='" + EXPERIENCEPROFESSIONNELLE + '\'' +
                 ", FORMATION='" + FORMATION + '\'' +
                 ", LANGUE='" + LANGUE + '\'' +
-                ", MAJCV=" + MAJCV +
+                ", MAJCV='" + MAJCV + '\'' +
                 ", MOTCLE='" + MOTCLE + '\'' +
                 ", NIVEAUACADEMIQUE='" + NIVEAUACADEMIQUE + '\'' +
+                ", rl_majcv=" + rl_majcv +
+                ", rl_desc='" + rl_desc + '\'' +
                 '}';
     }
 }
