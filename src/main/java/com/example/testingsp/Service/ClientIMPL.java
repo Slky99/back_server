@@ -23,7 +23,8 @@ public class ClientIMPL implements  ClientService{
                 clientSaveDTO.getClientname(),
                 clientSaveDTO.getClient_add(),
                 clientSaveDTO.getClient_ice(),
-                clientSaveDTO.getMission()
+                clientSaveDTO.getMission(),
+                clientSaveDTO.getApofres()
         );
         clientRepo.save(client);
         return client.getClientname();
@@ -41,7 +42,8 @@ public class ClientIMPL implements  ClientService{
           i.getClientname(),
           i.getClient_add(),
           i.getClient_ice(),
-          i.getMission()
+          i.getMission(),
+                i.getApofres()
         );
         clientDTOList.add(clientDTO);
         }

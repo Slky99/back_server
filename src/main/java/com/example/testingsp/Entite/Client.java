@@ -24,19 +24,26 @@ public class Client {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Mission> mission ;
 
-    public Client(int clientid, String clientname, String client_add, String client_ice, List<Mission> mission) {
+    @OneToMany(mappedBy = "clients", fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Apoffres> apofres ;
+
+    public Client(int clientid, String clientname, String client_add, String client_ice, List<Mission> mission, List<Apoffres> apofres) {
         this.clientid = clientid;
         this.clientname = clientname;
         this.client_add = client_add;
         this.client_ice = client_ice;
         this.mission = mission;
+        this.apofres = apofres;
     }
 
-    public Client(String clientname, String client_add, String client_ice, List<Mission> mission) {
+
+    public Client(String clientname, String client_add, String client_ice, List<Mission> mission, List<Apoffres> apofres) {
         this.clientname = clientname;
         this.client_add = client_add;
         this.client_ice = client_ice;
         this.mission = mission;
+        this.apofres = apofres;
     }
 
     public Client() {
@@ -82,6 +89,15 @@ public class Client {
         this.mission = mission;
     }
 
+    public List<Apoffres> getApofres() {
+        return apofres;
+    }
+
+    public void setApofres(List<Apoffres> apofres) {
+        this.apofres = apofres;
+    }
+
+
     @Override
     public String toString() {
         return "Client{" +
@@ -90,6 +106,7 @@ public class Client {
                 ", client_add='" + client_add + '\'' +
                 ", client_ice='" + client_ice + '\'' +
                 ", mission=" + mission +
+                ", apofres=" + apofres +
                 '}';
     }
 }

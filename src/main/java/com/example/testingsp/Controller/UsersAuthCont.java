@@ -1,10 +1,12 @@
 package com.example.testingsp.Controller;
 
 
-import com.example.testingsp.Service.UserAuthService;
+import com.example.testingsp.Entite.UsersAuth;
+import com.example.testingsp.Repository.UsersAuthRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,23 +14,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UsersAuthCont {
 
+
     @Autowired
-    private UserAuthService userAuthService ;
+    private UsersAuthRepo usersAuthRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/login/{email}/{password}")
-    public ResponseEntity<Integer> login(@PathVariable("email") String email,
-                                         @PathVariable("password") String password) {
-        int loginResult = userAuthService.loginValidation(email, password);
 
-        if (loginResult == 1)
-        {   return new ResponseEntity<>(1, HttpStatus.OK);   }
-        else
-        {   return new ResponseEntity<>(0, HttpStatus.UNAUTHORIZED);  }
+    @PostMapping(path = "/ct/user")
+    public ResponseEntity<UsersAuth> addUser(@RequestBody UsersAuth usersAuth) {
+        String encodedPassword = passwordEncoder.encode(usersAuth.getPassword());
+        usersAuth.setPassword(encodedPassword);
+        UsersAuth saveuser = usersAuthRepo.save(usersAuth);
+        return new ResponseEntity<>(saveuser, HttpStatus.CREATED);
+
     }
-
-
-
 }
 
 

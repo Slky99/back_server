@@ -21,7 +21,7 @@ import java.util.List;
 @CrossOrigin
 public class FileEntityCont {
 
-    private static final String UPLOAD_DIR = "C:\\Users\\DELL\\OneDrive\\Bureau\\Angular_rh-master\\Cv_tech";
+    private static final String UPLOAD_DIR = "C:\\Users\\DELL\\OneDrive\\Bureau\\back_server-master\\Angular_rh-master\\Cv_tech\\Uploaded_Cvtech";
 
     @Autowired
     private FileEntityRepo fileEntityRepo ;
@@ -32,7 +32,7 @@ public class FileEntityCont {
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
                                                    @PathVariable String prospectId) {
         if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("Please select a file to upload");
+            return ResponseEntity.badRequest().body("select a file");
         }
 
         try {

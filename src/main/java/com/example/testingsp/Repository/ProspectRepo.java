@@ -16,9 +16,11 @@ public interface ProspectRepo extends JpaRepository<Prospect,Integer> {
             "GROUP BY p.SECTEURACTIVITE")
     List<ProsDto> getChartData();
 
-    @Query("SELECT new com.example.testingsp.DTO.MajProsDTO(p.MAJCV," +
-            " COUNT(p)) FROM Prospect p where p.MAJCV is not null AND p.MAJCV !=''" +
-            "GROUP BY p.MAJCV")
+    @Query("SELECT new com.example.testingsp.DTO.MajProsDTO(SUBSTRING(CAST(p.rl_majcv AS string)" +
+            ", 1, 4)," +
+            " COUNT(p)) FROM Prospect p WHERE p.rl_majcv IS NOT NULL " +
+            "GROUP BY p.rl_majcv")
+
     List<MajProsDTO>  getMajData();
 
     @Query("SELECT p FROM Prospect p" +

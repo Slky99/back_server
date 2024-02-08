@@ -28,7 +28,24 @@ public class ApoffresIMPL implements  ApoffresService{
                 appoffresSaveDTO.getCv_formater(),
                 appoffresSaveDTO.getConsultation_date(),
                 appoffresSaveDTO.getHeure(),
-                appoffresSaveDTO.getConsultation()
+                appoffresSaveDTO.getConsultation(),
+                appoffresSaveDTO.getLimite_soumission(),
+                appoffresSaveDTO.getConsultant(),
+                appoffresSaveDTO.getDate_solicit(),
+                appoffresSaveDTO.getCanal_solicit(),
+                appoffresSaveDTO.isSoumission(),
+                appoffresSaveDTO.getSoumi_desc(),
+                appoffresSaveDTO.getTJM(),
+                appoffresSaveDTO.getDisponibilité(),
+                appoffresSaveDTO.getRl_client(),
+                appoffresSaveDTO.getRl_aft_client(),
+                appoffresSaveDTO.getEntretien(),
+                appoffresSaveDTO.getAppl_entretien(),
+                appoffresSaveDTO.getAlrt_entretien(),
+                appoffresSaveDTO.getRl_aft_entretien(),
+                appoffresSaveDTO.getSort_entretien(),
+                appoffresSaveDTO.getNotif_condidat(),
+                appoffresSaveDTO.getCl_interlocu()
         );
         apoffresRepo.save(apoffres) ;
         return  apoffres.getMissions();
@@ -49,7 +66,24 @@ public class ApoffresIMPL implements  ApoffresService{
                     i.getCv_formater(),
                     i.getConsultation_date(),
                     i.getHeure(),
-                    i.getConsultation()
+                    i.getConsultation(),
+                    i.getLimite_soumission(),
+                    i.getConsultant(),
+                    i.getDate_solicit(),
+                    i.getCanal_solicit(),
+                    i.isSoumission(),
+                    i.getSoumi_desc(),
+                    i.getTJM(),
+                    i.getDisponibilité(),
+                    i.getRl_client(),
+                    i.getRl_aft_client(),
+                    i.getEntretien(),
+                    i.getAppl_entretien(),
+                    i.getAlrt_entretien(),
+                    i.getRl_aft_entretien(),
+                    i.getSort_entretien(),
+                    i.getNotif_condidat(),
+                    i.getCl_interlocu()
             );
             apoffresDTOList.add(apoffresDTO);
         }

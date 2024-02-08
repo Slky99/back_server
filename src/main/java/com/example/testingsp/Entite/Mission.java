@@ -28,7 +28,8 @@ public class Mission {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Client client ;
 
-    public Mission(int mission_id, String mission_ref, String designation, String lieuimput, String entite, BigDecimal nombrej, List<Consultant> missions, Client client) {
+    public Mission(int mission_id, String mission_ref, String designation, String lieuimput, String entite,
+                   BigDecimal nombrej, List<Consultant> missions, Client client) {
         this.mission_id = mission_id;
         this.mission_ref = mission_ref;
         this.designation = designation;

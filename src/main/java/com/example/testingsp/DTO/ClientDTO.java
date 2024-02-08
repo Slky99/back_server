@@ -1,5 +1,6 @@
 package com.example.testingsp.DTO;
 
+import com.example.testingsp.Entite.Apoffres;
 import com.example.testingsp.Entite.Mission;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.FetchType;
@@ -19,12 +20,16 @@ public class ClientDTO {
 
     private List<Mission> mission ;
 
-    public ClientDTO(int clientid, String clientname, String client_add, String client_ice, List<Mission> mission) {
+    private List<Apoffres> apofres ;
+
+
+    public ClientDTO(int clientid, String clientname, String client_add, String client_ice, List<Mission> mission, List<Apoffres> apofres) {
         this.clientid = clientid;
         this.clientname = clientname;
         this.client_add = client_add;
         this.client_ice = client_ice;
         this.mission = mission;
+        this.apofres = apofres;
     }
 
     public int getClientid() {
@@ -67,6 +72,14 @@ public class ClientDTO {
         this.mission = mission;
     }
 
+    public List<Apoffres> getApofres() {
+        return apofres;
+    }
+
+    public void setApofres(List<Apoffres> apofres) {
+        this.apofres = apofres;
+    }
+
     @Override
     public String toString() {
         return "ClientDTO{" +
@@ -75,6 +88,7 @@ public class ClientDTO {
                 ", client_add='" + client_add + '\'' +
                 ", client_ice='" + client_ice + '\'' +
                 ", mission=" + mission +
+                ", apofres=" + apofres +
                 '}';
     }
 }
