@@ -138,4 +138,14 @@ private ProspectService prospectService ;
         prospectService.updateProspectStatus();
         return ResponseEntity.ok("Prospect status update initiated.");
     }
+
+    @GetMapping("/nameID/{id}")
+    public ResponseEntity<String> getNameProspect(@PathVariable Integer id){
+        String ProspectName = prospectService.getProspectNameById(id);
+        if(ProspectName != null ){
+        return  ResponseEntity.ok(ProspectName);
+        }else {
+            return  ResponseEntity.notFound().build();
+        }
+    }
 }

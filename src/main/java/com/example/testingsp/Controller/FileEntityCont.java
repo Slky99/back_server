@@ -21,7 +21,7 @@ import java.util.List;
 @CrossOrigin
 public class FileEntityCont {
 
-    private static final String UPLOAD_DIR = "C:\\Users\\DELL\\OneDrive\\Bureau\\back_server-master\\Angular_rh-master\\Cv_tech\\Uploaded_Cvtech";
+    private static final String UPLOAD_DIR = "/home/iteamma/public_html/iteam-grh/CVTECH";
 
     @Autowired
     private FileEntityRepo fileEntityRepo ;

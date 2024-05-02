@@ -20,19 +20,16 @@ import java.util.Optional;
 
 
 @Service
-public class ProspectIMPL implements  ProspectService{
+public class ProspectIMPL implements ProspectService {
 
     @Autowired
-    public ProspectRepo prospectRepo ;
+    public ProspectRepo prospectRepo;
     @Autowired
     private ConsultantRepo consultantRepo;
 
 
-
-
-
     @Override
-    public String addProspect(ProspectSaveDTO prospectSaveDTO){
+    public String addProspect(ProspectSaveDTO prospectSaveDTO) {
 
         Prospect prospect = new Prospect(
                 prospectSaveDTO.getEMAIL(),
@@ -57,53 +54,53 @@ public class ProspectIMPL implements  ProspectService{
                 prospectSaveDTO.getNIVEAUACADEMIQUE(),
                 prospectSaveDTO.getRl_majcv(),
                 prospectSaveDTO.getRl_desc()
-         );
-    prospectRepo.save(prospect);
-    return prospect.getNOM();
-    }
-
-
-@Override
-    public List showProspect(){
-
-    List<Prospect> showprospect = prospectRepo.findAll();
-    List<ProspectDTO> prospectDTOList = new ArrayList<>();
-
-    for (Prospect i : showprospect){
-
-        ProspectDTO prospectDTO = new ProspectDTO(
-                i.getIDTIERS(),
-                i.getEMAIL(),
-                i.getNOM(),
-                i.getStatus(),
-                i.getPAYSRESIDENCE(),
-                i.getSECTEURACTIVITE(),
-                i.getTELEPHONE(),
-                i.getCIN(),
-                i.getDateNaissance(),
-                i.getPROFESSION(),
-                i.getSEXE(),
-                i.getANNEEEXPERIENCE(),
-                i.getCOMPETENCEMETIER(),
-                i.getCOMPETENCETECHNIQUE(),
-                i.getDISPONIBILITE(),
-                i.getEXPERIENCEPROFESSIONNELLE(),
-                i.getFORMATION(),
-                i.getLANGUE(),
-                i.getMAJCV(),
-                i.getMOTCLE(),
-                i.getNIVEAUACADEMIQUE(),
-                i.getRl_majcv(),
-                i.getRl_desc()
         );
-        prospectDTOList.add(prospectDTO);
-    }
-    return prospectDTOList ;
+        prospectRepo.save(prospect);
+        return prospect.getNOM();
     }
 
 
-    public  String updateProspect(ProspectUpDTO prospectUpDTO){
-        if (prospectRepo.existsById(prospectUpDTO.getIDTIERS())){
+    @Override
+    public List showProspect() {
+
+        List<Prospect> showprospect = prospectRepo.findAll();
+        List<ProspectDTO> prospectDTOList = new ArrayList<>();
+
+        for (Prospect i : showprospect) {
+
+            ProspectDTO prospectDTO = new ProspectDTO(
+                    i.getIDTIERS(),
+                    i.getEMAIL(),
+                    i.getNOM(),
+                    i.getStatus(),
+                    i.getPAYSRESIDENCE(),
+                    i.getSECTEURACTIVITE(),
+                    i.getTELEPHONE(),
+                    i.getCIN(),
+                    i.getDateNaissance(),
+                    i.getPROFESSION(),
+                    i.getSEXE(),
+                    i.getANNEEEXPERIENCE(),
+                    i.getCOMPETENCEMETIER(),
+                    i.getCOMPETENCETECHNIQUE(),
+                    i.getDISPONIBILITE(),
+                    i.getEXPERIENCEPROFESSIONNELLE(),
+                    i.getFORMATION(),
+                    i.getLANGUE(),
+                    i.getMAJCV(),
+                    i.getMOTCLE(),
+                    i.getNIVEAUACADEMIQUE(),
+                    i.getRl_majcv(),
+                    i.getRl_desc()
+            );
+            prospectDTOList.add(prospectDTO);
+        }
+        return prospectDTOList;
+    }
+
+
+    public String updateProspect(ProspectUpDTO prospectUpDTO) {
+        if (prospectRepo.existsById(prospectUpDTO.getIDTIERS())) {
             Prospect prospect = prospectRepo.getById(prospectUpDTO.getIDTIERS());
 
 
@@ -133,21 +130,19 @@ public class ProspectIMPL implements  ProspectService{
 
             prospectRepo.save(prospect);
             return "Prospect updated successfully";
-        }
-        else  {
+        } else {
             System.out.println("Id introuvable");
         }
-        return null ;
+        return null;
     }
 
-    public Prospect getProspectbyId(int idtiers){
+    public Prospect getProspectbyId(int idtiers) {
         Optional<Prospect> optionalProspect = prospectRepo.findById(idtiers);
 
         if (optionalProspect.isPresent()) {
-            return  optionalProspect.get();
-        }
-        else {
-            throw  new EntityNotFoundException(("Prospect introuvable"+ idtiers));
+            return optionalProspect.get();
+        } else {
+            throw new EntityNotFoundException(("Prospect introuvable" + idtiers));
         }
 
     }
@@ -159,7 +154,8 @@ public class ProspectIMPL implements  ProspectService{
 
 
         if (!"Prospect".equals(prospect.getStatus())) {
-            throw new IllegalStateException("Person is not a prospect.");}
+            throw new IllegalStateException("Person is not a prospect.");
+        }
         // Creation de nouveau consultant a partir de l'entité  prospect
         Consultant consultant = new Consultant();
         consultant.setConsultantname(prospect.getNOM());
@@ -174,18 +170,17 @@ public class ProspectIMPL implements  ProspectService{
         prospectRepo.save(prospect);
 
 
-        return consultant ;
+        return consultant;
 
     }
 
     @Override
     public boolean deleteProspect(int id) {
 
-        if(prospectRepo.existsById(id)) {
+        if (prospectRepo.existsById(id)) {
             prospectRepo.deleteById(id);
 
-        }
-        else{
+        } else {
             System.out.println("Prospect id introuvable");
         }
         return true;
@@ -207,6 +202,7 @@ public class ProspectIMPL implements  ProspectService{
     public void scheduleUpdateProspectStatus() {
         updateProspectStatus();
     }
+
     public void updateProspectStatus() {
         List<Prospect> prospects = prospectRepo.findAll();
 
@@ -254,6 +250,12 @@ public class ProspectIMPL implements  ProspectService{
     public List<Prospect> getProspectsWithDisponibiliteNotRelance() {
         return prospectRepo.findProspectsWithDisponibiliteNotRelance();
 
-}
+    }
+
+    @Override
+    public String getProspectNameById(Integer id) {
+        Optional<Prospect> prospectOptional = prospectRepo.findById(id);
+        return prospectOptional.map(Prospect::getNOM).orElse(null);
+    }
 }
 
